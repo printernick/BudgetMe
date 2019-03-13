@@ -4,7 +4,10 @@ import java.util.HashMap;
 
 public class Wallet
 {
+    //The key is a string for the name of the budget category
     private HashMap<String, BudgetCategory> budgets;
+
+    //Representing monthly budget which will be divided up
     private int money;
 
     Wallet()
@@ -30,5 +33,6 @@ public class Wallet
     public void addSubBudget(String category, double budget)
     {
         budgets.put(category, new BudgetCategory(budget));
+        money -= budget;
     }
 }
