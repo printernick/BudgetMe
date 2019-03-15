@@ -1,4 +1,3 @@
-//test
 package com.example.budgetme;
 
 public class BudgetItem

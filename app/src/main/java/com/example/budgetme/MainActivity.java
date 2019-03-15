@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT);
 
         final EditText budget = new EditText(MainActivity.this);
-        budget.setHint("800");
+        budget.setHint("Total Amount");
         budget.setLayoutParams(lp);
         budget.setInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    //update budget here
+                    //update budget here;
                 }
 
 
@@ -132,13 +132,13 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT);
 
         final EditText categoryName = new EditText(MainActivity.this);
-        categoryName.setHint("Food");
+        categoryName.setHint("Category");
         categoryName.setLayoutParams(lp);
         layout.addView(categoryName);
         Log.d("myTag", "message");
 
         final EditText budget = new EditText(MainActivity.this);
-        budget.setHint("150");
+        budget.setHint("Amount");
         budget.setInputType(InputType.TYPE_CLASS_NUMBER);
         budget.setLayoutParams(lp);
         layout.addView(budget);
@@ -166,4 +166,13 @@ public class MainActivity extends AppCompatActivity {
         alert.setTitle("Add budget category");
         alert.show();
     }
+
+    public void onAddEntry( View view ){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertBuilder.setMessage("Item")
+                .setCancelable(true);
+    }
+
+
+
 }
