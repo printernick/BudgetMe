@@ -8,24 +8,24 @@ public class Wallet
     private HashMap<String, BudgetCategory> budgets;
 
     //Representing monthly budget which will be divided up
-    private int money;
+    private double money;
 
     Wallet()
     {
         money = 0;
     }
 
-    Wallet(int money)
+    Wallet(double money)
     {
         this.money = money;
     }
 
-    public int getMoney()
+    public double getMoney()
     {
         return money;
     }
 
-    private void setMoney(int money)
+    private void setMoney(double money)
     {
         this.money = money;
     }

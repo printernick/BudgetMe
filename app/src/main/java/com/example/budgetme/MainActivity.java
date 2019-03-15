@@ -61,6 +61,41 @@ public class MainActivity extends AppCompatActivity {
 //        }
     }
 
+    public void onSetWalletBudget(View view)
+    {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+
+        final EditText budget = new EditText(MainActivity.this);
+        budget.setHint("800");
+        budget.setLayoutParams(lp);
+        budget.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        alertBuilder.setView(budget);
+        alertBuilder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Wallet wallet = new Wallet(Double.parseDouble(budget.getText().toString()));
+
+                //Add to database here
+                dialog.cancel();
+            }
+        })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = alertBuilder.create();
+        alert.setTitle("Add budget category");
+        alert.show();
+    }
+
     public void onAddCategory(View view)
     {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
