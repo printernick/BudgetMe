@@ -1,5 +1,7 @@
 package com.example.budgetme;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +12,53 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
+//    private ChildEventListener childEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("wallets");
+
+//        childEventListener = new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        }
     }
 
     public void onAddCategory(View view)
