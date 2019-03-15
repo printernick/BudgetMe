@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends AppCompatActivity {
+
+    private boolean madeWallet = false;
+    private String key = "";
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -78,9 +83,26 @@ public class MainActivity extends AppCompatActivity {
         alertBuilder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Wallet wallet = new Wallet(Double.parseDouble(budget.getText().toString()));
+                //get new unique key
+                if (!madeWallet)
+                {
+                    key = myRef.push().getKey();
+                    Wallet wallet = new Wallet(Double.parseDouble(budget.getText().toString()));
+                    myRef.child(key).setValue(wallet);
+                    Toast.makeText(MainActivity.this, wallet.getMoney() + " budget set.", Toast.LENGTH_LONG).show();
 
-                //Add to database here
+                }
+                else
+                {
+                    //update budget here
+                }
+
+
+
+//                ProgressBar progressBar = (ProgressBar)findViewById(R.id.moneyBar);
+//                progressBar.setProgress((int)wallet.getMoney());
+//                progressBar.setMax((int)wallet.getMoney());
+
                 dialog.cancel();
             }
         })

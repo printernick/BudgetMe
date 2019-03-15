@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BudgetMe</string>
+    <string name="set_budget">Set Budget</string>
 </resources>
