@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "939246129486",
+    "firebase_url": "https://budgetme-fa0c8.firebaseio.com",
+    "project_id": "budgetme-fa0c8",
+    "storage_bucket": "budgetme-fa0c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939246129486:android:18312e595ee9b4d7",
+        "android_client_info": {
+          "package_name": "com.example.budgetme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "939246129486-1q3q8g8qqi0brq0510gghi9bgnuf8mlg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.budgetme",
+            "certificate_hash": "27bf779c95488276b32c3929812ea86a2d4d2f3a"
+          }
+        },
+        {
+          "client_id": "939246129486-r695hgtuelppdtek6ri0qb9jo7k9iula.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWAIf6n4dsrZ-YFzA7ojT23DTE1xyy09I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "939246129486-r695hgtuelppdtek6ri0qb9jo7k9iula.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
