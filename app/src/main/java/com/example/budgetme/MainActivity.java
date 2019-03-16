@@ -168,4 +168,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
+
+    public void onRemove(View view){
+        Intent intent = new Intent ( this, RemoveActivity.class );
+        startActivity(intent);
+    }
+
 }
