@@ -34,12 +34,13 @@ public class SearchActivity extends AppCompatActivity {
         categories = new ArrayList<BudgetCategory>();
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("contacts");
+        myRef = database.getReference("wallets");
 
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 categories.add(dataSnapshot.getValue(BudgetCategory.class));
+                initRecyclerView();
             }
 
             @Override
@@ -64,11 +65,16 @@ public class SearchActivity extends AppCompatActivity {
         };
         myRef.addChildEventListener(childEventListener);
 
-        initRecyclerView();
     }
 
     private void initRecyclerView()
     {
+//        Log.d("zzz", "in recycler view");
+//        Log.d("zzz", categories.size() + " size");
+//        for (BudgetCategory category : categories)
+//        {
+//            Log.d("zzz", category.toString());
+//        }
         RecyclerView recyclerView = findViewById(R.id.searchRecyclerView);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(categories, this);
         recyclerView.setAdapter(adapter);

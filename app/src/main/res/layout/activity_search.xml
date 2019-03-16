@@ -38,11 +38,24 @@
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="49dp"
-        android:layout_marginLeft="49dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginLeft="112dp"
         android:layout_marginBottom="9dp"
+        android:onClick="onSearch"
         android:text="@string/search"
         app:layout_constraintBottom_toTopOf="@+id/searchRecyclerView"
         app:layout_constraintStart_toStartOf="@+id/categorySearch"
         app:layout_constraintTop_toBottomOf="@+id/categorySearch" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="74dp"
+        android:layout_marginLeft="74dp"
+        android:layout_marginBottom="9dp"
+        android:onClick="onHome"
+        android:text="@string/home"
+        app:layout_constraintBottom_toTopOf="@+id/searchRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/searchRecyclerView" />
 </android.support.constraint.ConstraintLayout>

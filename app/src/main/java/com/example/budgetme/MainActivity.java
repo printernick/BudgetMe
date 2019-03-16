@@ -1,5 +1,6 @@
 package com.example.budgetme;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.content.DialogInterface;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -22,13 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean madeWallet = false;
-    private String key = "";
+    private double setBudget;
+    private double myRemainingBudget;
+    private boolean hasBudgetSet = false;
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-//    private ChildEventListener childEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,32 +40,7 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("wallets");
 
-//        childEventListener = new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        }
+
     }
 
     public void onSetWalletBudget(View view)
@@ -75,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT);
 
         final EditText budget = new EditText(MainActivity.this);
-        budget.setHint("Total Amount");
+        budget.setHint("800");
         budget.setLayoutParams(lp);
         budget.setInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -84,24 +61,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //get new unique key
-                if (!madeWallet)
+                Double newBudget = Double.parseDouble(budget.getText().toString());
+                if (!hasBudgetSet)
                 {
-                    key = myRef.push().getKey();
-                    Wallet wallet = new Wallet(Double.parseDouble(budget.getText().toString()));
-                    myRef.child(key).setValue(wallet);
-                    Toast.makeText(MainActivity.this, wallet.getMoney() + " budget set.", Toast.LENGTH_LONG).show();
-
+                    //key = myRef.push().getKey();
+                    //Wallet wallet = new Wallet(Double.parseDouble(budget.getText().toString()));
+                    //myRef.child(key).setValue(wallet);
+                    hasBudgetSet = true;
+                    myRemainingBudget = newBudget;
                 }
                 else
                 {
-                    //update budget here;
+                    double difference = setBudget - newBudget;
+                    myRemainingBudget += (setBudget - difference);
                 }
 
+                setBudget = newBudget;
 
+                Toast.makeText(MainActivity.this, setBudget + " budget set.", Toast.LENGTH_LONG).show();
+                TextView initialBudget = findViewById(R.id.initialBudget);
+                initialBudget.setText(Double.toString(setBudget));
 
-//                ProgressBar progressBar = (ProgressBar)findViewById(R.id.moneyBar);
-//                progressBar.setProgress((int)wallet.getMoney());
-//                progressBar.setMax((int)wallet.getMoney());
+                TextView remainingBudget = findViewById(R.id.remainingBudget);
+                remainingBudget.setText(Double.toString(myRemainingBudget));
 
                 dialog.cancel();
             }
@@ -114,65 +96,76 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         AlertDialog alert = alertBuilder.create();
-        alert.setTitle("Set Total Budget");
+        alert.setTitle("Set maximum budget");
         alert.show();
     }
 
     public void onAddCategory(View view)
     {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
-        alertBuilder.setMessage("Food, rent, etc.")
-                .setCancelable(true);
+        if (!hasBudgetSet)
+        {
+            Toast.makeText(MainActivity.this, "Set your budget first!", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertBuilder.setMessage("Food, rent, etc.")
+                    .setCancelable(true);
 
-        //Creates layout to add EditText to
-        final LinearLayout layout = new LinearLayout(MainActivity.this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+            //Creates layout to add EditText to
+            final LinearLayout layout = new LinearLayout(MainActivity.this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT);
 
-        final EditText categoryName = new EditText(MainActivity.this);
-        categoryName.setHint("Category");
-        categoryName.setLayoutParams(lp);
-        layout.addView(categoryName);
-        Log.d("myTag", "message");
+            final EditText categoryName = new EditText(MainActivity.this);
+            categoryName.setHint("Food");
+            categoryName.setLayoutParams(lp);
+            layout.addView(categoryName);
 
-        final EditText budget = new EditText(MainActivity.this);
-        budget.setHint("Amount");
-        budget.setInputType(InputType.TYPE_CLASS_NUMBER);
-        budget.setLayoutParams(lp);
-        layout.addView(budget);
+            final EditText budget = new EditText(MainActivity.this);
+            budget.setHint("150");
+            budget.setInputType(InputType.TYPE_CLASS_NUMBER);
+            budget.setLayoutParams(lp);
+            layout.addView(budget);
 
-        alertBuilder.setView(layout);
+            alertBuilder.setView(layout);
 
-        alertBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String budgetCatName = (categoryName.getText().toString());
-                        Double budgetAmount = Double.parseDouble(budget.getText().toString());
+            alertBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String budgetCatName = (categoryName.getText().toString());
+                    Double budgetAmount = Double.parseDouble(budget.getText().toString());
 
-                        //Add to database here
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                        String key = myRef.push().getKey();
+                    myRef.child(key).setValue(new BudgetCategory(budgetCatName, budgetAmount));
 
-        AlertDialog alert = alertBuilder.create();
-        alert.setTitle("Add Budget Category");
-        alert.show();
+                    myRemainingBudget -= budgetAmount;
+
+                    TextView remainingBudget = findViewById(R.id.remainingBudget);
+                    remainingBudget.setText(Double.toString(myRemainingBudget));
+
+                    dialog.cancel();
+                }
+            })
+                    .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert = alertBuilder.create();
+            alert.setTitle("Add budget category");
+            alert.show();
+        }
+
     }
 
-    public void onAddEntry( View view ){
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
-        alertBuilder.setMessage("Item")
-                .setCancelable(true);
+    public void onGoSearch(View view)
+    {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
     }
-
-
-
 }

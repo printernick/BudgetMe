@@ -20,6 +20,12 @@ public class Wallet
         this.money = money;
     }
 
+    Wallet(Wallet w)
+    {
+        this.money = w.money;
+        budgets = new HashMap<String, BudgetCategory>(w.budgets);
+    }
+
     public double getMoney()
     {
         return money;
@@ -30,9 +36,9 @@ public class Wallet
         this.money = money;
     }
 
-    public void addSubBudget(String category, double budget)
-    {
-        budgets.put(category, new BudgetCategory(budget));
-        money -= budget;
-    }
+//    public void addSubBudget(String category, double budget)
+//    {
+//        budgets.put(category, new BudgetCategory(budget));
+//        money -= budget;
+//    }
 }

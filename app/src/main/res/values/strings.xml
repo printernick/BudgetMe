@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">BudgetMe</string>
     <string name="set_budget">Set Budget</string>
+    <string name="initial_budget">Initial Budget</string>
+    <string name="remaining_budget">Remaining Budget</string>
+    <string name="search">Search</string>
+    <string name="search_for_a_category">Search for a category</string>
+    <string name="go_search">Go Search</string>
+    <string name="budget_item">Budget Item</string>
 </resources>

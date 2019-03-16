@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -68,8 +69,24 @@ public class RemoveActivity extends AppCompatActivity {
         recyclerViewAdapter = new RecyclerViewAdapter(searchResults, this);
         
         ListView results = findViewById( R.id.recyclerView );
-//        results.setAdapter( recyclerViewAdapter );
+        results.setAdapter( recyclerViewAdapter );
+
+        results.setOnItemClickListener();
+
 
 
     }
+
+    public void refresh ( String update ){
+        recyclerViewAdapter.clear();
+
+    }
+
+    public void removeCategory( View view ){
+        recyclerViewAdapter.cleaer();
+        boolean found = false;
+        EditText text = (EditText) findViewById( R.id.editTextName);
+        
+    }
+
 }
