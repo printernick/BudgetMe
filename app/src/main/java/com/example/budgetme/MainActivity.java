@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         AlertDialog alert = alertBuilder.create();
-        alert.setTitle("Add budget category");
+        alert.setTitle("Set Total Budget");
         alert.show();
     }
 
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         AlertDialog alert = alertBuilder.create();
-        alert.setTitle("Add budget category");
+        alert.setTitle("Add Budget Category");
         alert.show();
     }
 
