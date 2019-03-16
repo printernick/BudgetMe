@@ -1,5 +1,6 @@
 package com.example.budgetme;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.content.DialogInterface;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    private ChildEventListener childEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,32 +40,7 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("wallets");
 
-        childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
     }
 
     public void onSetWalletBudget(View view)
@@ -86,21 +61,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //get new unique key
+                Double newBudget = Double.parseDouble(budget.getText().toString());
                 if (!hasBudgetSet)
                 {
                     //key = myRef.push().getKey();
                     //Wallet wallet = new Wallet(Double.parseDouble(budget.getText().toString()));
                     //myRef.child(key).setValue(wallet);
                     hasBudgetSet = true;
-                    myRemainingBudget = Double.parseDouble(budget.getText().toString());
+                    myRemainingBudget = newBudget;
                 }
                 else
                 {
-                    double difference = setBudget - Double.parseDouble(budget.getText().toString());
+                    double difference = setBudget - newBudget;
                     myRemainingBudget = setBudget - difference;
-                    Log.d("adsf", "changed remaining budget else statement");
                 }
-                setBudget = Double.parseDouble(budget.getText().toString());
+
+                setBudget = newBudget;
 
                 Toast.makeText(MainActivity.this, setBudget + " budget set.", Toast.LENGTH_LONG).show();
                 TextView initialBudget = findViewById(R.id.initialBudget);
@@ -162,8 +138,14 @@ public class MainActivity extends AppCompatActivity {
                     String budgetCatName = (categoryName.getText().toString());
                     Double budgetAmount = Double.parseDouble(budget.getText().toString());
 
-                    //Add to database here
-                    //myRef("wallets/" + key).
+                        String key = myRef.push().getKey();
+                    myRef.child(key).setValue(new BudgetCategory(budgetCatName, budgetAmount));
+
+                    myRemainingBudget -= budgetAmount;
+
+                    TextView remainingBudget = findViewById(R.id.remainingBudget);
+                    remainingBudget.setText(Double.toString(myRemainingBudget));
+
                     dialog.cancel();
                 }
             })
@@ -179,5 +161,11 @@ public class MainActivity extends AppCompatActivity {
             alert.show();
         }
 
+    }
+
+    public void onGoSearch(View view)
+    {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
     }
 }

@@ -36,9 +36,9 @@ public class Wallet
         this.money = money;
     }
 
-    public void addSubBudget(String category, double budget)
-    {
-        budgets.put(category, new BudgetCategory(budget));
-        money -= budget;
-    }
+//    public void addSubBudget(String category, double budget)
+//    {
+//        budgets.put(category, new BudgetCategory(budget));
+//        money -= budget;
+//    }
 }

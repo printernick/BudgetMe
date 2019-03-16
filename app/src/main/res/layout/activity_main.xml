@@ -9,46 +9,32 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
-        android:layout_height="469dp"
-        android:layout_marginBottom="73dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="189dp"
+        android:layout_marginBottom="13dp"
+        app:layout_constraintBottom_toTopOf="@+id/goSearchActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/remainingBudget"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
     </android.support.v7.widget.RecyclerView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="4dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:backgroundTint="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:rippleColor="@null"
-        app:srcCompat="@drawable/plus" />
-
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addBudgetCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="91dp"
         android:layout_marginLeft="91dp"
-        android:layout_marginEnd="91dp"
-        android:layout_marginRight="91dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
         android:layout_marginBottom="12dp"
         android:onClick="onAddCategory"
-        android:text="Button"
+        android:text="@string/budget_item"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/setWalletBudget"
+        app:layout_constraintEnd_toStartOf="@+id/goSearchActivity"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -107,6 +93,20 @@
         android:text="@string/initial_budget"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/goSearchActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="12dp"
+        android:onClick="onGoSearch"
+        android:text="@string/go_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addBudgetCategory"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
 
 </android.support.constraint.ConstraintLayout>
