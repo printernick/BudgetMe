@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     double difference = setBudget - newBudget;
-                    myRemainingBudget = setBudget - difference;
+                    myRemainingBudget += (setBudget - difference);
                 }
 
                 setBudget = newBudget;

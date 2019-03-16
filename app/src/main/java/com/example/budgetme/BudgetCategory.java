@@ -43,7 +43,7 @@ public class BudgetCategory
     @Override
     public String toString()
     {
-        return name + " budget";
+        return name + " " + budget;
     }
 
     /*public void addBudgetItem(String name, double cost)
