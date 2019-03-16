@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private double setBudget;
@@ -31,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
+    private ArrayList<BudgetCategory> categories;
+    private ChildEventListener childEventListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,37 @@ public class MainActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("wallets");
+
+        categories = new ArrayList<>();
+
+        childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                categories.add(dataSnapshot.getValue(BudgetCategory.class));
+                initRecyclerView();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        myRef.addChildEventListener(childEventListener);
 
 
     }
@@ -73,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     double difference = setBudget - newBudget;
-                    myRemainingBudget += (setBudget - difference);
+                    myRemainingBudget -= difference;
                 }
 
                 setBudget = newBudget;
@@ -138,13 +176,15 @@ public class MainActivity extends AppCompatActivity {
                     String budgetCatName = (categoryName.getText().toString());
                     Double budgetAmount = Double.parseDouble(budget.getText().toString());
 
-                        String key = myRef.push().getKey();
+                    String key = myRef.push().getKey();
                     myRef.child(key).setValue(new BudgetCategory(budgetCatName, budgetAmount));
 
                     myRemainingBudget -= budgetAmount;
 
                     TextView remainingBudget = findViewById(R.id.remainingBudget);
                     remainingBudget.setText(Double.toString(myRemainingBudget));
+
+
 
                     dialog.cancel();
                 }
@@ -168,4 +208,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
+
+    private void initRecyclerView()
+    {
+        RecyclerView recyclerView = findViewById(R.id.mainRecyclerView);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(categories, MainActivity.this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
 }
